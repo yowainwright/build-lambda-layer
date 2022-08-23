@@ -1,17 +1,24 @@
 # Build Lambda Layer
 
-##### Builds Lambda Layers with Controls! 🕹
+![Typed with TypeScript](https://flat.badgen.net/badge/icon/Typed?icon=typescript&label&labelColor=blue&color=555555)
+![ci](https://github.com/yowainwright/build-lambda-layer/actions/workflows/ci.yml/badge.svg)
+[![npm](https://img.shields.io/npm/v/build-lambda-layer)](https://www.npmjs.com/package/build-lambda-layer)
+[![Github](https://badgen.net/badge/icon/github?icon=github&label&color=black)](https://github.com/yowainwright/build-lambda-layer)
 
-_Build Lambda Layer_ is a simple utility CLI to build a Lambda Layers with controls for node lambda projects.
+### Builds Lambda Layers with Controls! 🕹
 
-## Why is this written?
+_Build Lambda Layer_ is a simple utility CLI for building a Lambda Layers with controls for node lambda projects.
 
-Build Lambda Layer is built to take the any consideration out of a simple task.
+---
+
+### Why is this written?
+
+Build Lambda Layer is built to take the any consideration out of the _seemingly_ simple task of building a lambda layer.<br>
 Sure, you could do it but why when _Build Lambda Layer_ has done it for you!
 
 ---
 
-## Do I get any other benefits?
+### Do I get any other benefits?
 
 Yes! _Build Lambda Layer_ is built to assist with optimizing your builds, it:
 
@@ -20,7 +27,7 @@ Yes! _Build Lambda Layer_ is built to assist with optimizing your builds, it:
 
 ---
 
-## Install
+### Install
 
 ```sh
 pnpm install build-lambda-layer
@@ -28,11 +35,11 @@ pnpm install build-lambda-layer
 
 ---
 
-## Usage
+### Usage
 
 Build Lambda Layer is built to work as a CLI.
 
-### Easy mode
+#### Easy mode
 
 ```sh
 install-layer
@@ -40,7 +47,7 @@ install-layer
 
 ---
 
-### Full API
+#### Full API
 
 ```sh
 Usage: build-layer [options]
@@ -61,7 +68,7 @@ Options:
 
 ---
 
-## Roadmap
+### Roadmap
 
 - [ ] Tests (should come tomorrow)
 - [ ] Full AWS CLI integration
