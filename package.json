@@ -2,10 +2,26 @@
   "name": "build-lambda-layer",
   "version": "1.0.0",
   "description": "Build node awesome lambda layers with controls 🕹",
-  "main": "index.js",
+  "type": "module",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "bin": {
+    "build-lambda-layer": "dist/index.cjs",
+    "build-layer": "dist/index.cjs"
+  },
   "scripts": {
+    "build": "tsup src/index.ts",
     "cmd:quick-test": "ts-node src/index.ts --debug",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [],
   "author": "Jeff Wainwright <yowainwright@gmail.com> (https://jeffry.in)",
@@ -20,8 +36,15 @@
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^18.7.10",
+    "@typescript-eslint/eslint-plugin": "^5.34.0",
+    "@typescript-eslint/parser": "^5.34.0",
+    "eslint": "^8.22.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1",
     "ts-node": "^10.9.1",
+    "tslib": "^2.4.0",
     "tsup": "^6.2.2",
+    "tsutils": "^3.21.0",
     "typescript": "^4.7.4",
     "vitest": "^0.22.1"
   }

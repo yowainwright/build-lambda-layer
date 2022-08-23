@@ -30,8 +30,12 @@ export async function action(options: Options = {}): Promise<void> {
     ...updatedOptions
   } = updatedConfig;
 
+  if (options.isTestingCLI) {
+    console.log({ options: { ...updatedOptions, config: updatedConfig } });
+  }
+
   try {
-    await script(updatedOptions);
+    await script({ ...updatedOptions, config: usedConfig });
   } catch (err) {
     console.log(err);
   }

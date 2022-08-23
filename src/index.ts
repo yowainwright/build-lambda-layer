@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import { program } from "./program";
-import { script } from "./script";
+import script, { gatherDeps } from "./script";
 
 program;
 
-export { script };
+export { gatherDeps };
+export default script;

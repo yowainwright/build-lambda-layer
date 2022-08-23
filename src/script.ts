@@ -3,8 +3,7 @@ import { exec } from 'child_process'
 import { sync as glob } from "fast-glob";
 import { readFileSync } from "fs-extra";
 import compare from "compare-versions";
-
-type $FIXME = any;
+import { Dependencies, DepsToInstall, GatherDeps, InstallDeps, LambdaLayerPackageJson } from "./interfaces";
 
 /**
  * execPromise
@@ -17,7 +16,7 @@ export const execPromise = promisify(exec);
 export function resolveJSON(
   path: string,
   debug = false
-): $FIXME | void {
+): LambdaLayerPackageJson | void {
   try {
     const json = JSON.parse(readFileSync(path, "utf8"));
     return json;
@@ -28,7 +27,7 @@ export function resolveJSON(
   }
 }
 
-export function depsToInstall({ dependencies = {}, ignore = [], include = {}, debug = false } = {}) {
+export function depsToInstall({ dependencies, ignore = [], include = {}, debug = false }: DepsToInstall) {
   const dependencyNames = Object.keys(dependencies);
   const includeNames = Object.keys(include);
   const hasDependencies = dependencyNames.length > 0;
@@ -57,16 +56,12 @@ export async function installDeps({
   isTesting = false,
   exec = execPromise,
   runner = 'npm',
-}: $FIXME) {
+}: InstallDeps) {
   const { ignore = [], include = {} } = config || {};
   const deps = depsToInstall({ dependencies, ignore, include, debug });
   const depsString = deps.map(({ name, version }) => `${name}@${version}`).join(' ');
   if (debug) console.log('installDeps:debugging:', { deps, config, depsString });
   if (isTesting || deps.length < 1) return;
-  /**
-   * @todo provide support for yarn/pnpm installs
-   * @note yarn/pnpm installs won't respect their configured workspace
-   */
   try {
     await exec(`${runner} install ${dest ? `--prefix ${dest} ` : ' '}${depsString} -S`);
     return deps;
@@ -84,10 +79,10 @@ export async function gatherDeps({
   isTesting = false,
   rootDir = "./",
   runner = 'npm',
-}: $FIXME) {
+}: GatherDeps) {
   const files = glob(matchers, { cwd: rootDir, ignore });
   const dependencies = files
-    .reduce((acc: $FIXME, file: string) => {
+    .reduce((acc: Dependencies, file: string) => {
       const path = `${rootDir}${file}`;
       const packageJson = readFileSync(path, "utf8");
       const { dependencies } = JSON.parse(packageJson);
@@ -95,9 +90,17 @@ export async function gatherDeps({
         ...acc,
         ...dependencies,
       }
-    }, {} as $FIXME);
+    }, {} as Dependencies);
   if (debug) console.log('gather-deps:debugging:', { dependencies, config });
-  const output = await installDeps({ config, debug, dest, dependencies, isTesting, runner })
+  const configItems = config && Object.keys(config);
+  const hasConfig = configItems && configItems.length > 0;
+  let updatedConfig = config;
+  if (!hasConfig) {
+    const rootPkgJSON = readFileSync(`${rootDir}package.json`, "utf8");
+    const { lambdaLayer } = JSON.parse(rootPkgJSON);
+    updatedConfig = lambdaLayer;
+  }
+  const output = await installDeps({ config: updatedConfig, debug, dest, dependencies, isTesting, runner })
   return output;
 }
 
