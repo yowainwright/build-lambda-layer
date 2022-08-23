@@ -16,10 +16,14 @@
     "build-layer": "dist/index.cjs"
   },
   "scripts": {
-    "build": "tsup src/index.ts",
+    "build": "pnpm run build:util; pnpm run build:declarations",
+    "build:util": "tsup src/index.ts --format esm,cjs",
+    "build:declarations": "tsc --project tsconfig.declarations.json",
     "cmd:quick-test": "ts-node src/index.ts --debug",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
+    "prepublishOnly": "pnpm build",
+    "release": "release-it",
     "test": "echo \"Error: no test specified\" && exit 1",
     "typecheck": "tsc --noEmit"
   },
@@ -41,6 +45,7 @@
     "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.7.1",
+    "release-it": "^15.3.0",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.0",
     "tsup": "^6.2.2",

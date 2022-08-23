@@ -67,6 +67,7 @@ export async function installDeps({
     return deps;
   } catch (err) {
     console.log(err);
+    return deps;
   }
 }
 
