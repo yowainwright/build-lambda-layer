@@ -27,7 +27,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "typecheck": "tsc --noEmit"
   },
-  "keywords": [],
   "author": "Jeff Wainwright <yowainwright@gmail.com> (https://jeffry.in)",
   "license": "MIT",
   "dependencies": {
@@ -38,6 +37,9 @@
     "fs-extra": "^10.1.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@commitlint/prompt-cli": "^17.0.3",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^18.7.10",
     "@typescript-eslint/eslint-plugin": "^5.34.0",
@@ -52,5 +54,26 @@
     "tsutils": "^3.21.0",
     "typescript": "^4.7.4",
     "vitest": "^0.22.1"
+  },
+  "keywords": [
+    "nodejs",
+    "aws",
+    "lambda",
+    "aws-lambda",
+    "lambda-layers"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yowainwright/build-lambda-layer.git"
+  },
+  "homepage": "https://github.com/yowainwright/build-lambda-layer#readme",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "pnpm": ">=7.0.0"
   }
 }
