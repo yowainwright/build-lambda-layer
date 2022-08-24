@@ -5,25 +5,25 @@
 [![npm](https://img.shields.io/npm/v/build-lambda-layer)](https://www.npmjs.com/package/build-lambda-layer)
 [![Github](https://badgen.net/badge/icon/github?icon=github&label&color=black)](https://github.com/yowainwright/build-lambda-layer)
 
-### Builds Lambda Layers with Controls! 🕹
+### Builds Awesome Node Lambda Layers with Control! 🕹
 
-_Build Lambda Layer_ is a simple utility CLI for building a Lambda Layers with controls for node lambda projects.
+_Build Lambda Layer_ is a small utility CLI for building Lambda Layers with control for AWS Node Lambda projects.
 
 ---
 
 ### Why is this written?
 
-Build Lambda Layer is built to take the any consideration out of the _seemingly_ simple task of building a lambda layer.<br>
-Sure, you could do it but why when _Build Lambda Layer_ has done it for you!
+_Build Lambda Layer_ is built to take any consideration out of the _seemingly_ simple task of building a lambda layer.<br>
+Sure, you could do it manually but why when _Build Lambda Layer_ will get it done it for you!
 
 ---
 
 ### Do I get any other benefits?
 
-Yes! _Build Lambda Layer_ is built to assist with optimizing your builds, it:
+Yes! _Build Lambda Layer_ is built to assist with optimizing your node lambda layer builds, it:
 
-- Works with and for monorepos.
-- Provides `ignore` and `include` support.
+- Works with and for monorepos
+- Provides `ignore` and `include` support
 
 ---
 
@@ -70,8 +70,8 @@ Options:
 
 ### Roadmap
 
-- [ ] Tests (should come tomorrow)
-- [ ] Full AWS CLI integration
+- Tests (should come tomorrow)
+- Full AWS CLI integration
 
 ---
 
