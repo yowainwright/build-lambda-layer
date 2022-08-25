@@ -7,7 +7,7 @@ import { Options, ConfigResult } from "./interfaces";
 
 export async function action(options: Options = {}): Promise<void> {
   // capture config data
-  const explorer = cosmiconfigSync("");
+  const explorer = cosmiconfigSync("lambdaLayer");
   const result = options?.searchPath
     ? explorer.search(options.searchPath)
     : explorer.search();
@@ -31,11 +31,12 @@ export async function action(options: Options = {}): Promise<void> {
   } = updatedConfig;
 
   if (options.isTestingCLI) {
-    console.log({ options: { ...updatedOptions, config: updatedConfig } });
+    console.log({ options: updatedOptions });
+    return;
   }
 
   try {
-    await script({ ...updatedOptions, config: usedConfig });
+    await script(updatedOptions);
   } catch (err) {
     console.log(err);
   }
