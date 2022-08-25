@@ -4,6 +4,7 @@ import { program } from "commander";
 import { cosmiconfigSync } from "cosmiconfig";
 import script from "./script";
 import { Options, ConfigResult } from "./interfaces";
+import gradient from 'gradient-string';
 
 export async function action(options: Options = {}): Promise<void> {
   // capture config data
@@ -36,7 +37,9 @@ export async function action(options: Options = {}): Promise<void> {
   }
 
   try {
+    console.log(`🕹 ${gradient.vice('lambda-layer:')} running...`);
     await script(updatedOptions);
+    console.log(`🕹 ${gradient.vice('lambda-layer:')} complete!`);
   } catch (err) {
     console.log(err);
   }
