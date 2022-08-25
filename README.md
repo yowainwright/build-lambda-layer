@@ -75,4 +75,4 @@ Options:
 
 ---
 
-Made by [@yowainwright](https://github.com/yowainwright) for fun with passion! MIT, 2022 🐝
+Made by [@yowainwright](https://github.com/yowainwright) for fun with passion! MIT, 2022
