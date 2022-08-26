@@ -50,11 +50,11 @@ program
   .description(
     "Build Lambda Layer, Build node awesome lambda layers with controls 🕹"
   )
-  .argument('<dir>', 'lambda layer dir')
-  .option('--architecture [architecture...]', 'architecture')
-  .option('--bucket <bucket>', 'bucket')
+  .argument('<dir>', 'lambda layer directory to build to')
+  .option('--architectures [architectures...]', 'architectures for deployment to AWS')
+  .option('--bucket <bucket>', 'bucket to deploy to using AWS')
   .option("-c, --config <config>", "path to a config file")
-  .option('--deploy', 'deploy lambda layer')
+  .option('--deploy', 'deploy your lambda layer')
   .option('-n, --name <name>', 'lambda layer name')
   .option("--debug", "enable debugging")
   .option("-f, --files [files...]", "file glob pattern")
@@ -64,7 +64,7 @@ program
   .option('-o, --output <output>', 'output path')
   .option("-r, --rootDir <rootDir>", "root directory to start search")
   .option("--runner <runner>", "npm, pnpm, or yarn")
-  .option('--runtimes [runtimes...]', 'runtimes')
+  .option('--runtimes [runtimes...]', 'runtimes for deployment to AWS')
   .option("-t, --isTestingCLI", "enable CLI only testing")
   .action(action)
   .parse(process.argv);
