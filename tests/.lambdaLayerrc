@@ -1,0 +1,6 @@
+{
+  "include": {
+    "lodash": "latest"
+  },
+  "exclude": ["gradient-string"]
+}

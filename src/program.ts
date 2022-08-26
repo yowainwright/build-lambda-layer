@@ -4,10 +4,11 @@ import { program } from "commander";
 import { cosmiconfigSync } from "cosmiconfig";
 import script from "./script";
 import { Options, ConfigResult } from "./interfaces";
+import gradient from 'gradient-string';
 
-export async function action(options: Options = {}): Promise<void> {
+export async function action(dir: string, options: Options = {}): Promise<void> {
   // capture config data
-  const explorer = cosmiconfigSync("");
+  const explorer = cosmiconfigSync("lambdaLayer");
   const result = options?.searchPath
     ? explorer.search(options.searchPath)
     : explorer.search();
@@ -20,6 +21,7 @@ export async function action(options: Options = {}): Promise<void> {
     ...(!Object.keys(pathConfig).length ? result?.config : {}),
     ...(pathConfig?.lambdaLayer ? { ...pathConfig.lambdaLayer } : pathConfig),
     ...options,
+    dir
   };
 
   // remove action level options
@@ -31,11 +33,14 @@ export async function action(options: Options = {}): Promise<void> {
   } = updatedConfig;
 
   if (options.isTestingCLI) {
-    console.log({ options: { ...updatedOptions, config: updatedConfig } });
+    console.log({ options: updatedOptions });
+    return;
   }
 
   try {
-    await script({ ...updatedOptions, config: usedConfig });
+    console.log(`🕹 ${gradient.vice('lambda-layer:')} running...`);
+    await script(updatedOptions);
+    console.log(`🕹 ${gradient.vice('lambda-layer:')} complete!`);
   } catch (err) {
     console.log(err);
   }
@@ -45,13 +50,21 @@ program
   .description(
     "Build Lambda Layer, Build node awesome lambda layers with controls 🕹"
   )
+  .argument('<dir>', 'lambda layer dir')
+  .option('--architecture [architecture...]', 'architecture')
+  .option('--bucket <bucket>', 'bucket')
   .option("-c, --config <config>", "path to a config file")
+  .option('--deploy', 'deploy lambda layer')
+  .option('-n, --name <name>', 'lambda layer name')
   .option("--debug", "enable debugging")
   .option("-f, --files [files...]", "file glob pattern")
   .option("-i, --ignore [ignore...]", "ignore glob pattern")
   .option("--isTesting", "enable running fn tests w/o overwriting")
+  .option('--noZip', 'don\'t zip lambda layer')
+  .option('-o, --output <output>', 'output path')
   .option("-r, --rootDir <rootDir>", "root directory to start search")
   .option("--runner <runner>", "npm, pnpm, or yarn")
+  .option('--runtimes [runtimes...]', 'runtimes')
   .option("-t, --isTestingCLI", "enable CLI only testing")
   .action(action)
   .parse(process.argv);
