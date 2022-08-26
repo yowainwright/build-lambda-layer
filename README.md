@@ -42,7 +42,7 @@ Build Lambda Layer is built to work as a CLI.
 #### Easy mode
 
 ```sh
-install-layer <dir>
+build-layer <dir>
 ```
 
 #### Full API
@@ -53,10 +53,10 @@ Usage: build-layer [options] <dir>
 Build Lambda Layer, Build node awesome lambda layers with controls 🕹
 
 Arguments:
-dir lambda layer dir
+dir the lambda layer directory
 
 Options:
---architecture [architecture...] architecture
+--architectures [architecture...] architecture
 --bucket <bucket> bucket
 -c, --config <config> path to a config file
 --deploy deploy lambda layer
@@ -70,6 +70,42 @@ Options:
 --runner <runner> npm, pnpm, or yarn
 --runtimes [runtimes...] runtimes
 -h, --help display help for command
+```
+
+---
+
+## Recipes
+
+##### Debugging
+
+Gets you logging in your terminal
+
+```sh
+build-layer <dir> --debug
+```
+
+##### No Zip
+
+Just build you a directory
+
+```sh
+build-layer <dir> --noZip
+```
+
+##### Customer runner
+
+Build everything with a runner besides `npm`. Options are `npm`, `pnpm`, or `yarn`
+
+```sh
+build-layer <dir> --runner 'pnpm'
+```
+
+##### AWS Deploy
+
+Assumes you're authenticated and have the AWS CLI
+
+```
+build-layer <dir> --bucket <bucket> --runtimes [runtimes...] --architectures [architectures...]
 ```
 
 ---
