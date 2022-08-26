@@ -2,8 +2,6 @@ import { promisify } from "util";
 import { exec } from "child_process";
 import { expect, test, vi } from 'vitest';
 import { stdoutToJSON } from "stdouttojson";
-import { cosmiconfigSync } from "cosmiconfig";
-import { action } from "../src/program";
 
 export const execPromise = promisify(exec);
 
@@ -30,36 +28,36 @@ vi.mock("../scripts", () => ({
 
 test("w/ no config reference", async () => {
   const { stdout = "{}" } = await execPromise(
-    "ts-node ./src/program.ts --isTestingCLI --files 'package.json'"
+    "ts-node ./src/program.ts foo --isTestingCLI --files 'package.json'"
   );
 
   const result = stdoutToJSON(stdout);
 
   expect(result).toStrictEqual({
-    options: { files: ["package.json"] },
+    options: { dir: 'foo', files: ["package.json"] },
   });
 });
 
 test('w/ options', async () => {
   const { stdout = "{}" } = await execPromise(
-    "ts-node ./src/program.ts --isTestingCLI --debug --files 'package.json'"
+    "ts-node ./src/program.ts foo --isTestingCLI --debug --files 'package.json'"
   );
 
   const result = stdoutToJSON(stdout);
 
   expect(result).toStrictEqual({
-    options: { debug: "true", files: ["package.json"] }
+    options: { dir: 'foo', debug: "true", files: ["package.json"] }
   });
 });
 
 test('w/ search path', async () => {
   const { stdout = "{}" } = await execPromise(
-    "ts-node ./src/program.ts --isTestingCLI --debug --config './tests/.lambdaLayerrc'"
+    "ts-node ./src/program.ts foo --isTestingCLI --debug --config './tests/.lambdaLayerrc'"
   );
 
   const result = stdoutToJSON(stdout);
 
   expect(result).toStrictEqual({
-    options: { debug: "true", exclude: ['gradient-string'], include: { lodash: "latest" } }
+    options: { dir: 'foo', debug: "true", exclude: ['gradient-string'], include: { lodash: "latest" } }
   });
 });

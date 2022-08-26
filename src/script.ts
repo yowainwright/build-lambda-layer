@@ -4,7 +4,8 @@ import { sync as glob } from "fast-glob";
 import { readFileSync } from "fs-extra";
 import { validate } from "compare-versions";
 import gradient from 'gradient-string';
-import { CheckForUnsafeStrings, Dependencies, DepsToInstall, GatherDeps, InstallDeps, LambdaLayerPackageJson } from "./interfaces";
+import { zip } from 'zip-a-folder';
+import { CheckForUnsafeStrings, Dependencies, DepsToInstall, BuildLambda, InstallDeps, LambdaLayerPackageJson } from "./interfaces";
 
 /**
  * execPromise
@@ -31,9 +32,11 @@ export function resolveJSON(
   }
 }
 
-export function checkForUnsafeStrings({ deps, output, runner }: CheckForUnsafeStrings): boolean {
+export function checkForUnsafeStrings({ deps, dir, output, runner }: CheckForUnsafeStrings): boolean {
   const isValidRunner = ['yarn', 'pnpm', 'npm', 'bun'].includes(runner);
   if (!isValidRunner) return false
+  const isValidDir = /[A-Za-z0-9\-_.]/.test(dir);
+  if (!isValidDir) return false
   const isValideModule = deps.every(({ name, version }) => /[A-Za-z0-9\-_.]/.test(name) && validate(version));
   if (!isValideModule) return false
   const isValidOutput = /[A-Za-z0-9\-_.]/.test(output);
@@ -58,20 +61,23 @@ export function depsToInstall({ dependencies, ignore = [], include = {}, debug =
 export async function installDeps({
   config,
   dependencies,
-  dest = 'nodejs',
+  dir,
   debug = false,
   isTesting = false,
   exec = execPromise,
+  output = __dirname,
   runner = 'npm',
 }: InstallDeps) {
   const { ignore = [], include = {} } = config || {};
   const deps = depsToInstall({ dependencies, ignore, include, debug });
   const depsString = deps.map(({ name, version }) => `${name}@${version}`).join(' ');
-  const output = dest ? ` --prefix ${dest} ` : ' ';
+  const dest = `--prefix ${dir}/nodejs`;
   if (debug) logger('installDeps', { deps, config, depsString });
-  if (isTesting || deps.length < 1) return;
+  // checks for unsafe exec inputs
+  const isExec = checkForUnsafeStrings({ deps, dir, output, runner });
+  if (isTesting || deps.length < 1 || !isExec) return;
   try {
-    await exec(`${runner} install${output}${depsString} -S`);
+    await exec(`${runner} install ${dest} ${depsString} -S`);
     return deps;
   } catch (err) {
     if (debug) logger('installDeps', err);
@@ -79,16 +85,47 @@ export async function installDeps({
   }
 }
 
-export async function gatherDeps({
+export async function deployLambda({
+  debug = false,
+  dir,
+  bucket,
+  runtimes = ['nodejs14.x'],
+  architectures = ['x86_64'],
+}: any) {
+  const runtimesString = runtimes.join(' ');
+  const architecturesString = architectures.join(' ');
+  try {
+    if (debug) logger('deployLambda', { architectures, bucket, dir, runtimes, msg: 'Build Lambda Layers assumes you\'re authenticated to AWS! 👌' });
+    if (!bucket) throw new Error('No bucket provided');
+    await exec(`
+        aws lambda publish-layer-version
+        --layer-name ${dir}
+        --content S3Bucket=${bucket},S3Key=${dir}.zip
+        --compatible-runtimes ${runtimesString}
+        --compatible-architectures ${architecturesString}
+      `);
+  } catch (err) {
+    if (debug) logger('deployLambda', err);
+    return;
+  }
+}
+
+export async function buildLambda({
+  architectures,
+  bucket,
   config,
   debug = false,
-  dest = 'nodejs',
+  deploy = false,
+  dir,
   files: matchers = ['package.json'],
   ignore = ["node_modules/**/*", "**/node_modules/**/*"],
   isTesting = false,
+  noZip = false,
+  output = "./",
   rootDir = "./",
   runner = 'npm',
-}: GatherDeps) {
+  runtimes,
+}: BuildLambda) {
   const files = glob(matchers, { cwd: rootDir, ignore });
   const dependencies = files
     .reduce((acc: Dependencies, file: string) => {
@@ -109,8 +146,10 @@ export async function gatherDeps({
     const { lambdaLayer } = JSON.parse(rootPkgJSON);
     updatedConfig = lambdaLayer;
   }
-  const output = await installDeps({ config: updatedConfig, debug, dest, dependencies, isTesting, runner })
-  return output;
+  const dest = await installDeps({ config: updatedConfig, debug, dependencies, dir, isTesting, output, runner });
+  if (!noZip && !isTesting) await zip(dir, `${output}${dir}.zip`);
+  if (deploy && !isTesting) await deployLambda({ bucket, debug, dir, runtimes, architectures });
+  return dest;
 }
 
-export default gatherDeps;
+export default buildLambda;
