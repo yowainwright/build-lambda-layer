@@ -42,36 +42,35 @@ Build Lambda Layer is built to work as a CLI.
 #### Easy mode
 
 ```sh
-install-layer
+install-layer <dir>
 ```
-
----
 
 #### Full API
 
 ```sh
-Usage: build-layer [options]
+Usage: build-layer [options] <dir>
 
 Build Lambda Layer, Build node awesome lambda layers with controls 🕹
 
+Arguments:
+dir lambda layer dir
+
 Options:
+--architecture [architecture...] architecture
+--bucket <bucket> bucket
 -c, --config <config> path to a config file
+--deploy deploy lambda layer
+-n, --name <name> lambda layer name
 --debug enable debugging
 -f, --files [files...] file glob pattern
 -i, --ignore [ignore...] ignore glob pattern
---isTesting enable running fn tests w/o overwriting
+--noZip don't zip lambda layer
+-o, --output <output> output path
 -r, --rootDir <rootDir> root directory to start search
 --runner <runner> npm, pnpm, or yarn
--t, --isTestingCLI enable CLI only testing
+--runtimes [runtimes...] runtimes
 -h, --help display help for command
 ```
-
----
-
-### Roadmap
-
-- Tests (should come tomorrow)
-- Full AWS CLI integration
 
 ---
 
