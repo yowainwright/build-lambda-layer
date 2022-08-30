@@ -32,15 +32,27 @@ export function resolveJSON(
   }
 }
 
-export function checkForUnsafeStrings({ deps, dir, output, runner }: CheckForUnsafeStrings): boolean {
+export function checkForUnsafeStrings({ debug = false, deps, dir, output, runner }: CheckForUnsafeStrings): boolean {
   const isValidRunner = ['yarn', 'pnpm', 'npm', 'bun'].includes(runner);
-  if (!isValidRunner) return false
+  if (!isValidRunner) {
+    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid runner', runner });
+    return false
+  }
   const isValidDir = /[A-Za-z0-9\-_.]/.test(dir);
-  if (!isValidDir) return false
+  if (!isValidDir) {
+    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid dir', dir });
+    return false
+  }
   const isValideModule = deps.every(({ name, version }) => /[A-Za-z0-9\-_.]/.test(name) && validate(version));
-  if (!isValideModule) return false
+  if (!isValideModule) {
+    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid deps', deps });
+    return false
+  }
   const isValidOutput = /[A-Za-z0-9\-_.]/.test(output);
-  if (!isValidOutput) return false
+  if (!isValidOutput) {
+    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid output', output });
+    return false
+  }
   return true
 }
 
