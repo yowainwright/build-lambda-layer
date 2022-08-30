@@ -86,7 +86,7 @@ export async function installDeps({
   const dest = `--prefix ${dir}/nodejs`;
   if (debug) logger('installDeps', { deps, config, depsString, isTesting });
   // checks for unsafe exec inputs
-  const isExec = checkForUnsafeStrings({ deps, dir, output, runner });
+  const isExec = checkForUnsafeStrings({ debug, deps, dir, output, runner });
   if (isTesting === true || deps.length < 1 || !isExec) return;
   if (debug) logger('installDeps', 'Installing deps!');
   try {
