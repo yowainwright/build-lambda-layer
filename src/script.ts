@@ -47,8 +47,14 @@ export function checkForUnsafeStrings({ debug = false, deps, dir, output, runner
   const isValidModule = deps.every(({ name, version }) => {
     const { validForNewPackages, validForOldPackages } = validatePkgName(name);
     const isValidName = validForNewPackages || validForOldPackages;
-    const isValidVersion = validate(version);
-    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid module', name, version, isValidName, isValidVersion });
+    const versionCharacters = version.split("");
+    const [firstCharacter, ...rest] = versionCharacters;
+    const specifier = ["^", "~"].includes(firstCharacter) ? firstCharacter : "";
+    const hasSpecifier = specifier.length === 1;
+    const characters = rest.join("");
+    const exactVersion = hasSpecifier ? characters : version;
+    const isValidVersion = validate(exactVersion);
+    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid module', name, version, exactVersion, isValidName, isValidVersion });
     return isValidName && isValidVersion;
   });
   if (!isValidModule) {
