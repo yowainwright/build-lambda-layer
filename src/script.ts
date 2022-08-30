@@ -127,6 +127,9 @@ export async function buildLambda({
   runtimes,
 }: BuildLambda) {
   const files = glob(matchers, { cwd: rootDir, ignore });
+  if (debug) logger('buildLambda', { config, files, matchers, ignore, rootDir });
+  if (!dir || dir.length < 1) throw new Error('No dir provided');
+  if (!files || files.length < 1) throw new Error('No config (package.json, ) files found');
   const dependencies = files
     .reduce((acc: Dependencies, file: string) => {
       const path = `${rootDir}${file}`;
