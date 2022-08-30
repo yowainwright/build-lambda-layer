@@ -21,6 +21,7 @@ export interface Options {
 export type ConfigResult = { config: Options } & CosmiconfigResult;
 
 export interface CheckForUnsafeStrings {
+  debug?: boolean;
   deps: Array<Record<string, string>>;
   dir: string;
   output: string;
