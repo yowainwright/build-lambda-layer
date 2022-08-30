@@ -72,10 +72,11 @@ export async function installDeps({
   const deps = depsToInstall({ dependencies, ignore, include, debug });
   const depsString = deps.map(({ name, version }) => `${name}@${version}`).join(' ');
   const dest = `--prefix ${dir}/nodejs`;
-  if (debug) logger('installDeps', { deps, config, depsString });
+  if (debug) logger('installDeps', { deps, config, depsString, isTesting });
   // checks for unsafe exec inputs
   const isExec = checkForUnsafeStrings({ deps, dir, output, runner });
-  if (isTesting || deps.length < 1 || !isExec) return;
+  if (isTesting === true || deps.length < 1 || !isExec) return;
+  if (debug) logger('installDeps', 'Installing deps!');
   try {
     await exec(`${runner} install ${dest} ${depsString} -S`);
     return deps;
