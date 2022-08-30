@@ -1,7 +1,7 @@
 import { promisify } from "util";
 import { exec } from 'child_process'
 import { sync as glob } from "fast-glob";
-import { readFileSync } from "fs-extra";
+import { existsSync, readFileSync, mkdirSync, readdirSync } from "fs-extra";
 import { validate } from "compare-versions";
 import validatePkgName from "validate-npm-package-name";
 import gradient from 'gradient-string';
@@ -36,12 +36,12 @@ export function resolveJSON(
 export function checkForUnsafeStrings({ debug = false, deps, dir, output, runner }: CheckForUnsafeStrings): boolean {
   const isValidRunner = ['yarn', 'pnpm', 'npm', 'bun'].includes(runner);
   if (!isValidRunner) {
-    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid runner', runner });
+    if (debug) logger('checkForUnsafeStrings', { msg: 'check invalid runner', runner });
     return false
   }
   const isValidDir = /[A-Za-z0-9\-_.]/.test(dir);
   if (!isValidDir) {
-    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid dir', dir });
+    if (debug) logger('checkForUnsafeStrings', { msg: 'check invalid dir', dir });
     return false
   }
   const isValidModule = deps.every(({ name, version }) => {
@@ -54,16 +54,16 @@ export function checkForUnsafeStrings({ debug = false, deps, dir, output, runner
     const characters = rest.join("");
     const exactVersion = hasSpecifier ? characters : version;
     const isValidVersion = validate(exactVersion);
-    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid module', name, version, exactVersion, isValidName, isValidVersion });
+    if (debug) logger('checkForUnsafeStrings', { msg: 'check invalid module', name, version, exactVersion, isValidName, isValidVersion });
     return isValidName && isValidVersion;
   });
   if (!isValidModule) {
-    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid deps', deps });
+    if (debug) logger('checkForUnsafeStrings', { msg: 'check invalid deps', deps });
     return false
   }
   const isValidOutput = /[A-Za-z0-9\-_.]/.test(output);
   if (!isValidOutput) {
-    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid output', output });
+    if (debug) logger('checkForUnsafeStrings', { msg: 'check invalid output', output });
     return false
   }
   return true
@@ -96,6 +96,7 @@ export async function installDeps({
   const { ignore = [], include = {} } = config || {};
   const deps = depsToInstall({ dependencies, ignore, include, debug });
   const depsString = deps.map(({ name, version }) => `${name}@${version}`).join(' ');
+  if (!existsSync(dir)) mkdirSync(dir);
   const dest = `--prefix ${dir}/nodejs`;
   if (debug) logger('installDeps', { deps, config, depsString, isTesting });
   // checks for unsafe exec inputs
@@ -170,7 +171,10 @@ export async function buildLambda({
     logger('error', { msg: 'No dependencies found! To build a lambda layer, dependencies are required. Is the file array correct?', files: matchers });
     return;
   }
-  if (debug) logger('gatherDeps', { dependencies, config });
+  if (debug) {
+    const currentDir = readdirSync(process.cwd());
+    logger('gatherDeps', { dependencies, config, currentDir, cwd: process.cwd(), __dirname: __dirname });
+  }
   const configItems = config && Object.keys(config);
   const hasConfig = configItems && configItems.length > 0;
   let updatedConfig = config;
@@ -179,6 +183,7 @@ export async function buildLambda({
     const { lambdaLayer } = JSON.parse(rootPkgJSON);
     updatedConfig = lambdaLayer;
   }
+
   const dest = await installDeps({ config: updatedConfig, debug, dependencies, dir, isTesting, output, runner });
   if (!noZip && !isTesting) await zip(dir, `${output}${dir}.zip`);
   if (deploy && !isTesting) await deployLambda({ bucket, debug, dir, runtimes, architectures });
