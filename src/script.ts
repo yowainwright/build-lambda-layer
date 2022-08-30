@@ -141,6 +141,10 @@ export async function buildLambda({
         ...dependencies,
       }
     }, {} as Dependencies);
+  if (Object.keys(dependencies).length < 1) {
+    logger('error', { msg: 'No dependencies found! To build a lambda layer, dependencies are required. Is the file array correct?', files: matchers });
+    return;
+  }
   if (debug) logger('gatherDeps', { dependencies, config });
   const configItems = config && Object.keys(config);
   const hasConfig = configItems && configItems.length > 0;
