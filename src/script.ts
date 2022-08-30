@@ -3,6 +3,7 @@ import { exec } from 'child_process'
 import { sync as glob } from "fast-glob";
 import { readFileSync } from "fs-extra";
 import { validate } from "compare-versions";
+import validatePkgName from "validate-npm-package-name";
 import gradient from 'gradient-string';
 import { zip } from 'zip-a-folder';
 import { CheckForUnsafeStrings, Dependencies, DepsToInstall, BuildLambda, InstallDeps, LambdaLayerPackageJson } from "./interfaces";
@@ -43,8 +44,14 @@ export function checkForUnsafeStrings({ debug = false, deps, dir, output, runner
     if (debug) logger('checkForUnsafeStrings', { msg: 'invalid dir', dir });
     return false
   }
-  const isValideModule = deps.every(({ name, version }) => /[A-Za-z0-9\-_.]/.test(name) && validate(version));
-  if (!isValideModule) {
+  const isValidModule = deps.every(({ name, version }) => {
+    const { validForNewPackages, validForOldPackages } = validatePkgName(name);
+    const isValidName = validForNewPackages || validForOldPackages;
+    const isValidVersion = validate(version);
+    if (debug) logger('checkForUnsafeStrings', { msg: 'invalid module', name, version, isValidName, isValidVersion });
+    return isValidName && isValidVersion;
+  });
+  if (!isValidModule) {
     if (debug) logger('checkForUnsafeStrings', { msg: 'invalid deps', deps });
     return false
   }
