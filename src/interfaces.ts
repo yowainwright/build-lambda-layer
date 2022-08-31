@@ -70,6 +70,7 @@ export interface InstallDeps {
   exec?: any;
   output?: string;
   runner?: string;
+  rootDir?: string;
 }
 
 export interface DepsToInstall {
