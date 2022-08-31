@@ -1,7 +1,7 @@
 import { promisify } from "util";
 import { exec } from 'child_process'
 import { sync as glob } from "fast-glob";
-import { existsSync, readFileSync, mkdirSync, readdirSync } from "fs-extra";
+import { copyFile, existsSync, readFileSync, mkdirSync, readdirSync } from "fs-extra";
 import { validate } from "compare-versions";
 import validatePkgName from "validate-npm-package-name";
 import gradient from 'gradient-string';
@@ -92,11 +92,16 @@ export async function installDeps({
   exec = execPromise,
   output = __dirname,
   runner = 'npm',
+  rootDir = process.cwd(),
 }: InstallDeps) {
   const { ignore = [], include = {} } = config || {};
   const deps = depsToInstall({ dependencies, ignore, include, debug });
   const depsString = deps.map(({ name, version }) => `${name}@${version}`).join(' ');
   if (!existsSync(dir)) mkdirSync(dir);
+  if (existsSync(`${rootDir}/.npmrc`)) {
+    copyFile(`${rootDir}/.npmrc`, `${dir}/.npmrc`);
+    if (debug) logger('npmrc', 'copied!');
+  }
   const dest = `--prefix ${dir}/nodejs`;
   if (debug) logger('installDeps', { deps, config, depsString, isTesting });
   // checks for unsafe exec inputs
@@ -184,7 +189,7 @@ export async function buildLambda({
     updatedConfig = lambdaLayer;
   }
 
-  const dest = await installDeps({ config: updatedConfig, debug, dependencies, dir, isTesting, output, runner });
+  const dest = await installDeps({ config: updatedConfig, debug, dependencies, dir, isTesting, output, runner, rootDir: process.cwd() });
   if (!noZip && !isTesting) await zip(dir, `${output}${dir}.zip`);
   if (deploy && !isTesting) await deployLambda({ bucket, debug, dir, runtimes, architectures });
   return dest;
