@@ -99,7 +99,7 @@ export async function installDeps({
   const depsString = deps.map(({ name, version }) => `${name}@${version}`).join(' ');
   if (!existsSync(dir)) mkdirSync(dir);
   if (existsSync(`${rootDir}/.npmrc`)) {
-    copyFile(`${rootDir}/.npmrc`, `${dir}/.npmrc`);
+    copyFile(`${rootDir}/.npmrc`, `${dir}/nodejs/.npmrc`);
     if (debug) logger('npmrc', 'copied!');
   }
   const dest = `--prefix ${dir}/nodejs`;
