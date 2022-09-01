@@ -6,6 +6,7 @@ import { validate } from "compare-versions";
 import validatePkgName from "validate-npm-package-name";
 import gradient from 'gradient-string';
 import { zip } from 'zip-a-folder';
+import { sync as rimraf } from 'rimraf';
 import { CheckForUnsafeStrings, Dependencies, DepsToInstall, BuildLambda, InstallDeps, LambdaLayerPackageJson } from "./interfaces";
 
 /**
@@ -97,12 +98,15 @@ export async function installDeps({
   const { ignore = [], include = {} } = config || {};
   const deps = depsToInstall({ dependencies, ignore, include, debug });
   const depsString = deps.map(({ name, version }) => `${name}@${version}`).join(' ');
-  if (!existsSync(dir)) mkdirSync(dir);
+  // clean up and setup the install
+  if (existsSync(dir)) rimraf(dir);
+  const modulePath = `${dir}/nodejs`;
+  mkdirSync(modulePath, { recursive: true });
   if (existsSync(`${rootDir}/.npmrc`)) {
-    copyFile(`${rootDir}/.npmrc`, `${dir}/nodejs/.npmrc`);
+    copyFile(`${rootDir}/.npmrc`, `${modulePath}/.npmrc`);
     if (debug) logger('npmrc', 'copied!');
   }
-  const dest = `--prefix ${dir}/nodejs`;
+  const dest = `--prefix ${modulePath}`;
   if (debug) logger('installDeps', { deps, config, depsString, isTesting });
   // checks for unsafe exec inputs
   const isExec = checkForUnsafeStrings({ debug, deps, dir, output, runner });
@@ -190,7 +194,10 @@ export async function buildLambda({
   }
 
   const dest = await installDeps({ config: updatedConfig, debug, dependencies, dir, isTesting, output, runner, rootDir: process.cwd() });
-  if (!noZip && !isTesting) await zip(dir, `${output}${dir}.zip`);
+  if (!noZip && !isTesting) {
+    rimraf(`${output}${dir}.zip`);
+    await zip(dir, `${output}${dir}.zip`);
+  }
   if (deploy && !isTesting) await deployLambda({ bucket, debug, dir, runtimes, architectures });
   return dest;
 }
