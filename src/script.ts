@@ -7,7 +7,7 @@ import validatePkgName from "validate-npm-package-name";
 import gradient from 'gradient-string';
 import { zip } from 'zip-a-folder';
 import { sync as rimraf } from 'rimraf';
-import { CheckForUnsafeStrings, Dependencies, DepsToInstall, BuildLambda, InstallDeps, LambdaLayerPackageJson } from "./interfaces";
+import { CheckForUnsafeStrings, Dependencies, DeployLambda, DepsToInstall, BuildLambda, InstallDeps, LambdaLayerPackageJson } from "./interfaces";
 
 /**
  * execPromise
@@ -91,7 +91,7 @@ export async function installDeps({
   debug = false,
   isTesting = false,
   exec = execPromise,
-  output = __dirname,
+  output = '',
   runner = 'npm',
   rootDir = process.cwd(),
 }: InstallDeps) {
@@ -99,8 +99,9 @@ export async function installDeps({
   const deps = depsToInstall({ dependencies, ignore, include, debug });
   const depsString = deps.map(({ name, version }) => `${name}@${version}`).join(' ');
   // clean up and setup the install
-  if (existsSync(dir)) rimraf(dir);
-  const modulePath = `${dir}/nodejs`;
+  const outDir = `${output}/${dir}`;
+  if (existsSync(outDir)) rimraf(outDir);
+  const modulePath = `${outDir}/nodejs`;
   mkdirSync(modulePath, { recursive: true });
   if (existsSync(`${rootDir}/.npmrc`)) {
     copyFile(`${rootDir}/.npmrc`, `${modulePath}/.npmrc`);
@@ -127,16 +128,17 @@ export async function deployLambda({
   bucket,
   runtimes = ['nodejs14.x'],
   architectures = ['x86_64'],
-}: any) {
+  output = '',
+}: DeployLambda) {
   const runtimesString = runtimes.join(' ');
   const architecturesString = architectures.join(' ');
   try {
-    if (debug) logger('deployLambda', { architectures, bucket, dir, runtimes, msg: 'Build Lambda Layers assumes you\'re authenticated to AWS! 👌' });
+    if (debug) logger('deployLambda', { architectures, bucket, dir, output, runtimes, msg: 'Build Lambda Layers assumes you\'re authenticated to AWS! 👌' });
     if (!bucket) throw new Error('No bucket provided');
     await exec(`
         aws lambda publish-layer-version
         --layer-name ${dir}
-        --content S3Bucket=${bucket},S3Key=${dir}.zip
+        --content S3Bucket=${bucket},S3Key=${output}${dir}.zip
         --compatible-runtimes ${runtimesString}
         --compatible-architectures ${architecturesString}
       `);
@@ -157,7 +159,7 @@ export async function buildLambda({
   ignore = ["node_modules/**/*", "**/node_modules/**/*"],
   isTesting = false,
   noZip = false,
-  output = "./",
+  output = "",
   rootDir = "./",
   runner = 'npm',
   runtimes,
@@ -195,10 +197,10 @@ export async function buildLambda({
 
   const dest = await installDeps({ config: updatedConfig, debug, dependencies, dir, isTesting, output, runner, rootDir: process.cwd() });
   if (!noZip && !isTesting) {
-    rimraf(`${output}${dir}.zip`);
-    await zip(dir, `${output}${dir}.zip`);
+    rimraf(`${output}/${dir}.zip`);
+    await zip(`${output}/${dir}`, `${output}/${dir}.zip`);
   }
-  if (deploy && !isTesting) await deployLambda({ bucket, debug, dir, runtimes, architectures });
+  if (deploy && bucket && !isTesting) await deployLambda({ bucket, debug, dir, runtimes, architectures });
   return dest;
 }
 
