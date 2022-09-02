@@ -21,7 +21,7 @@ By running:
 build-layer my-lambda-layer
 ```
 
-Build Lambda Layer will:
+_Build Lambda Layer_ will:
 
 - install all root `package.json` dependencies to your lambda layer, and
 - zip it up to be uploaded to AWS
@@ -36,7 +36,7 @@ By running:
 build-layer my-lambda-layer --files 'packages/**/package.json'
 ```
 
-Build Lambda Layer will:
+_Build Lambda Layer_ will:
 
 - install all `package/**/package.json` dependencies to your lambda layer, and
 - zip it up to be uploaded to AWS
@@ -45,7 +45,7 @@ Build Lambda Layer will:
 
 #### Ignore and Include support
 
-Build Lambda Layer supports specificity with `ignore` and `include` options.
+_Build Lambda Layer_ supports specificity with `ignore` and `include` options.
 
 Add a `"lambdaLayer"` object to your `package.json` file to configure `ignore` and `include`:
 
