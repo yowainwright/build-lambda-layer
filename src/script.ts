@@ -99,7 +99,7 @@ export async function installDeps({
   const deps = depsToInstall({ dependencies, ignore, include, debug });
   const depsString = deps.map(({ name, version }) => `${name}@${version}`).join(' ');
   // clean up and setup the install
-  const outDir = `${output}/${dir}`;
+  const outDir = `${rootDir}${output}/${dir}`;
   if (existsSync(outDir)) rimraf(outDir);
   const modulePath = `${outDir}/nodejs`;
   mkdirSync(modulePath, { recursive: true });
@@ -197,8 +197,8 @@ export async function buildLambda({
 
   const dest = await installDeps({ config: updatedConfig, debug, dependencies, dir, isTesting, output, runner, rootDir: process.cwd() });
   if (!noZip && !isTesting) {
-    rimraf(`${output}/${dir}.zip`);
-    await zip(`${output}/${dir}`, `${output}/${dir}.zip`);
+    rimraf(`${rootDir}${output}/${dir}.zip`);
+    await zip(`${rootDir}${output}/${dir}`, `${rootDir}${output}/${dir}.zip`);
   }
   if (deploy && bucket && !isTesting) await deployLambda({ bucket, debug, dir, runtimes, architectures });
   return dest;
