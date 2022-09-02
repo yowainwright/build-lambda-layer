@@ -79,3 +79,12 @@ export interface DepsToInstall {
   ignore?: Array<string>;
   include?: Dependencies;
 }
+
+export interface DeployLambda {
+  debug?: boolean;
+  dir: string
+  bucket: string;
+  runtimes?: Array<string>;
+  architectures?: Array<string>;
+  output?: string;
+}
