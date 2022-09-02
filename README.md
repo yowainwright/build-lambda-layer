@@ -13,19 +13,85 @@ _Build Lambda Layer_ is a small utility CLI for building Lambda Layers with cont
 
 ### Why is this written?
 
-_Build Lambda Layer_ is built to take any consideration out of the _seemingly_ simple task of building a lambda layer.<br>
-Sure, you could do it manually but why when _Build Lambda Layer_ will get it done it for you!
+_Build Lambda Layer_ takes all complexity out of building lambda layers.
+
+By running:
+
+```sh
+build-layer my-lambda-layer
+```
+
+_Build Lambda Layer_ will:
+
+- install all root `package.json` dependencies to your lambda layer, and
+- zip it up to be uploaded to AWS
 
 ---
 
-### Do I get any other benefits?
+#### Additionally, it work with monorepos
 
-Yes! _Build Lambda Layer_ is built to assist with optimizing your node lambda layer builds, it:
+By running:
 
-- Works with and for monorepos
-- Provides `ignore` and `include` support
+```sh
+build-layer my-lambda-layer --files 'packages/**/package.json'
+```
+
+_Build Lambda Layer_ will:
+
+- install all `package/**/package.json` dependencies to your lambda layer, and
+- zip it up to be uploaded to AWS
 
 ---
+
+#### Ignore and Include support
+
+_Build Lambda Layer_ supports specificity with `ignore` and `include` options.
+
+Add a `"lambdaLayer"` object to your `package.json` file to configure `ignore` and `include`:
+
+```json
+{
+  "buildLambda": {
+    "ignore": ["@types/aws-lambda"],
+    "include": {
+      "aws-lambda": "latest"
+    }
+  }
+}
+```
+
+If you want to preserve your `package.json` file, you can add a `lambdaLayerrc` file to your project root:
+
+```json
+{
+  "ignore": ["@types/aws-lambda"],
+  "include": {
+    "aws-lambda": "latest"
+  }
+}
+```
+
+---
+
+#### Selective dependency installs
+
+There is nothing stopping you from creating your own dependency object to install.
+
+Add a `<my-dependencies>.json` file to your project root:
+
+```json
+{
+  "dependencies": {
+    "aws-lambda": "latest"
+  }
+}
+```
+
+And run:
+
+```sh
+build-layer my-lambda-layer --files '<my-dependencies>.json'
+```
 
 ### Install
 
@@ -35,17 +101,7 @@ pnpm install build-lambda-layer
 
 ---
 
-### Usage
-
-Build Lambda Layer is built to work as a CLI.
-
-#### Easy mode
-
-```sh
-build-layer <dir>
-```
-
-#### Full API
+### CLI API
 
 ```sh
 Usage: build-layer [options] <dir>
