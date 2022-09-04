@@ -11,9 +11,9 @@ _Build Lambda Layer_ is a small utility CLI for building Lambda Layers with cont
 
 ---
 
-### Why is this written?
+## Why is this written?
 
-_Build Lambda Layer_ takes all complexity out of building lambda layers.
+_Build Lambda Layer_ takes **all** complexity out of building lambda layers.
 
 By running:
 
@@ -23,12 +23,12 @@ build-layer my-lambda-layer
 
 _Build Lambda Layer_ will:
 
-- install all root `package.json` dependencies to your lambda layer, and
-- zip it up to be uploaded to AWS
+- install all root `package.json` dependencies to your `my-lambda-layer` lambda layer, and
+- zip it up to be uploaded to AWS 🚀
 
 ---
 
-#### Additionally, it work with monorepos
+#### Additionally, it works with monorepos!
 
 By running:
 
@@ -43,11 +43,11 @@ _Build Lambda Layer_ will:
 
 ---
 
-#### Ignore and Include support
+#### Ignore and include the dependencies you want!
 
 _Build Lambda Layer_ supports specificity with `ignore` and `include` options.
 
-Add a `"lambdaLayer"` object to your `package.json` file to configure `ignore` and `include`:
+By adding a `"lambdaLayer"` object to your `package.json` file, you can specify packages to `ignore` and `include`:
 
 ```json
 {
@@ -60,7 +60,7 @@ Add a `"lambdaLayer"` object to your `package.json` file to configure `ignore` a
 }
 ```
 
-If you want to preserve your `package.json` file, you can add a `lambdaLayerrc` file to your project root:
+You can add a `lambdaLayerrc` file to your project root if you want to preserve your `package.json` file.
 
 ```json
 {
@@ -73,7 +73,7 @@ If you want to preserve your `package.json` file, you can add a `lambdaLayerrc` 
 
 ---
 
-#### Selective dependency installs
+#### Be really selective with your installs
 
 There is nothing stopping you from creating your own dependency object to install.
 
@@ -92,6 +92,14 @@ And run:
 ```sh
 build-layer my-lambda-layer --files '<my-dependencies>.json'
 ```
+
+---
+
+That's it! 🎉
+
+Save yourself the time and effort of building Lambda Layers and let _Build Lambda Layer_ do it for you!
+
+---
 
 ### Install
 
