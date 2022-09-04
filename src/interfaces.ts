@@ -87,4 +87,5 @@ export interface DeployLambda {
   runtimes?: Array<string>;
   architectures?: Array<string>;
   output?: string;
+  rootDir?: string;
 }
