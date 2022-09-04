@@ -20,7 +20,7 @@
     "build:util": "tsup src/index.ts --format esm,cjs",
     "build:declarations": "tsc --project tsconfig.declarations.json",
     "clean": "rimraf dist",
-    "cmd:quick-test": "ts-node src/index.ts foo --debug --output 'layer'",
+    "cmd:quick-test": "ts-node src/index.ts foo --debug --output 'layer/'",
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "prepublishOnly": "pnpm build",

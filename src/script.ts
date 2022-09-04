@@ -93,13 +93,14 @@ export async function installDeps({
   exec = execPromise,
   output = '',
   runner = 'npm',
-  rootDir = process.cwd(),
+  rootDir = './',
 }: InstallDeps) {
   const { ignore = [], include = {} } = config || {};
   const deps = depsToInstall({ dependencies, ignore, include, debug });
   const depsString = deps.map(({ name, version }) => `${name}@${version}`).join(' ');
   // clean up and setup the install
-  const outDir = `${rootDir}${output}/${dir}`;
+  const outDir = `${rootDir}${output}${dir}`;
+  console.log(outDir);
   if (existsSync(outDir)) rimraf(outDir);
   const modulePath = `${outDir}/nodejs`;
   mkdirSync(modulePath, { recursive: true });
@@ -129,6 +130,7 @@ export async function deployLambda({
   runtimes = ['nodejs14.x'],
   architectures = ['x86_64'],
   output = '',
+  rootDir = './'
 }: DeployLambda) {
   const runtimesString = runtimes.join(' ');
   const architecturesString = architectures.join(' ');
@@ -138,7 +140,7 @@ export async function deployLambda({
     await exec(`
         aws lambda publish-layer-version
         --layer-name ${dir}
-        --content S3Bucket=${bucket},S3Key=${output}${dir}.zip
+        --content S3Bucket=${bucket},S3Key=${rootDir}${output}${dir}.zip
         --compatible-runtimes ${runtimesString}
         --compatible-architectures ${architecturesString}
       `);
@@ -184,7 +186,8 @@ export async function buildLambda({
   }
   if (debug) {
     const currentDir = readdirSync(process.cwd());
-    logger('gatherDeps', { dependencies, config, currentDir, cwd: process.cwd(), __dirname: __dirname });
+    console.log(`${rootDir}${output}${dir}`);
+    logger('gatherDeps', { dependencies, config, currentDir, cwd: process.cwd(), });
   }
   const configItems = config && Object.keys(config);
   const hasConfig = configItems && configItems.length > 0;
@@ -195,10 +198,9 @@ export async function buildLambda({
     updatedConfig = lambdaLayer;
   }
 
-  const dest = await installDeps({ config: updatedConfig, debug, dependencies, dir, isTesting, output, runner, rootDir: process.cwd() });
+  const dest = await installDeps({ config: updatedConfig, debug, dependencies, dir, isTesting, output, runner, rootDir });
   if (!noZip && !isTesting) {
-    rimraf(`${rootDir}${output}/${dir}.zip`);
-    await zip(`${rootDir}${output}/${dir}`, `${rootDir}${output}/${dir}.zip`);
+    await zip(`${rootDir}${output}${dir}`, `${rootDir}${output}${dir}.zip`);
   }
   if (deploy && bucket && !isTesting) await deployLambda({ bucket, debug, dir, runtimes, architectures });
   return dest;
