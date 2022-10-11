@@ -7,28 +7,28 @@
 
 ### Builds Awesome Node Lambda Layers with Control! 🕹
 
-_Build Lambda Layer_ is a small utility CLI for building Lambda Layers with control for AWS Node Lambda projects.
+_Build Lambda Layer_ is a utility CLI for building Lambda Layers with control for AWS Node Lambda projects.
 
 ---
 
 ## Why is this written?
 
-_Build Lambda Layer_ takes **all** complexity out of building lambda layers.
+_Build Lambda Layer_ takes complexity out of building lambda layers so lambda layers.
 
 By running:
 
 ```sh
-build-layer my-lambda-layer
+build-layer <your-lambda-layer>
 ```
 
 _Build Lambda Layer_ will:
 
-- install all root `package.json` dependencies to your `my-lambda-layer` lambda layer, and
+- install all `package.json` dependencies to `<your-lambda-layer>`, and
 - zip it up to be uploaded to AWS 🚀
 
 ---
 
-#### Additionally, it works with monorepos!
+#### Additionally, _Build Lambda Layer_ works with monorepos!
 
 By running:
 
@@ -47,7 +47,7 @@ _Build Lambda Layer_ will:
 
 _Build Lambda Layer_ supports specificity with `ignore` and `include` options.
 
-By adding a `"lambdaLayer"` object to your `package.json` file, you can specify packages to `ignore` and `include`:
+By adding a `"lambdaLayer"` object to a `package.json` file you're building from, you can specify packages to `ignore` and `include`:
 
 ```json
 {
@@ -60,7 +60,7 @@ By adding a `"lambdaLayer"` object to your `package.json` file, you can specify 
 }
 ```
 
-You can add a `lambdaLayerrc` file to your project root if you want to preserve your `package.json` file.
+You can also add a `lambdaLayerrc` file to your project root if you want to preserve your `package.json` file.
 
 ```json
 {
@@ -73,11 +73,11 @@ You can add a `lambdaLayerrc` file to your project root if you want to preserve 
 
 ---
 
-#### Be really selective with your installs
+#### Be _really_ selective with your installs
 
 There is nothing stopping you from creating your own dependency object to install.
 
-Add a `<my-dependencies>.json` file to your project root:
+Add a `<your-dependencies>.json` file to your project root:
 
 ```json
 {
@@ -90,7 +90,7 @@ Add a `<my-dependencies>.json` file to your project root:
 And run:
 
 ```sh
-build-layer my-lambda-layer --files '<my-dependencies>.json'
+build-layer my-lambda-layer --files '<your-dependencies>.json'
 ```
 
 ---
@@ -158,7 +158,7 @@ Just build you a directory
 build-layer <dir> --noZip
 ```
 
-##### Customer runner
+##### Custom runner
 
 Build everything with a runner besides `npm`. Options are `npm`, `pnpm`, or `yarn`
 
@@ -168,7 +168,8 @@ build-layer <dir> --runner 'pnpm'
 
 ##### AWS Deploy
 
-Assumes you're authenticated and have the AWS CLI
+Assumes you're authenticated, have the AWS CLI, and have already deployed the layer to S3.
+AKA, implemented but not actively guaranteed to work!
 
 ```
 build-layer <dir> --bucket <bucket> --runtimes [runtimes...] --architectures [architectures...]
