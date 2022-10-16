@@ -28,7 +28,7 @@ specifiers:
   tsup: ^6.2.2
   tsutils: ^3.21.0
   typescript: ^4.7.4
-  validate-npm-package-name: ^4.0.0
+  validate-npm-package-name: ^5.0.0
   vite: ^3.0.9
   vitest: ^0.24.1
   zip-a-folder: ^1.1.5
@@ -40,7 +40,7 @@ dependencies:
   fast-glob: 3.2.11
   fs-extra: 10.1.0
   gradient-string: 2.0.1
-  validate-npm-package-name: 4.0.0
+  validate-npm-package-name: 5.0.0
   zip-a-folder: 1.1.5
 
 devDependencies:
@@ -4847,9 +4847,9 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: true
 
-  /validate-npm-package-name/4.0.0:
-    resolution: {integrity: sha512-mzR0L8ZDktZjpX4OB46KT+56MAhl4EIazWP/+G/HPGuvfdaqg4YsCdtOm6U9+LOFyYDoh4dpnpxZRB9MQQns5Q==}
-    engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
+  /validate-npm-package-name/5.0.0:
+    resolution: {integrity: sha512-YuKoXDAhBYxY7SfOKxHBDoSyENFeW5VvIIQp2TGQuit8gpK6MnWaQelBKxso72DoxTZfZdcP3W90LqpSkgPzLQ==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
     dependencies:
       builtins: 5.0.1
     dev: false
