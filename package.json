@@ -33,7 +33,7 @@
   "dependencies": {
     "commander": "^9.4.0",
     "compare-versions": "^5.0.1",
-    "cosmiconfig": "^7.0.1",
+    "cosmiconfig": "^8.0.0",
     "fast-glob": "^3.2.11",
     "fs-extra": "^10.1.0",
     "gradient-string": "^2.0.1",
