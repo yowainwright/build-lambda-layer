@@ -17,7 +17,7 @@ specifiers:
   eslint: ^8.22.0
   eslint-config-prettier: ^8.5.0
   fast-glob: ^3.2.11
-  fs-extra: ^10.1.0
+  fs-extra: ^11.0.0
   gradient-string: ^2.0.1
   prettier: ^2.7.1
   release-it: ^15.4.0
@@ -38,7 +38,7 @@ dependencies:
   compare-versions: 5.0.1
   cosmiconfig: 8.0.0
   fast-glob: 3.2.11
-  fs-extra: 10.1.0
+  fs-extra: 11.0.0
   gradient-string: 2.0.1
   validate-npm-package-name: 5.0.0
   zip-a-folder: 1.1.5
@@ -2414,6 +2414,16 @@ packages:
       graceful-fs: 4.2.10
       jsonfile: 6.1.0
       universalify: 2.0.0
+    dev: true
+
+  /fs-extra/11.0.0:
+    resolution: {integrity: sha512-4YxRvMi4P5C3WQTvdRfrv5UVqbISpqjORFQAW5QPiKAauaxNCwrEdIi6pG3tDFhKKpMen+enEhHIzB/tvIO+/w==}
+    engines: {node: '>=14.14'}
+    dependencies:
+      graceful-fs: 4.2.10
+      jsonfile: 6.1.0
+      universalify: 2.0.0
+    dev: false
 
   /fs-extra/8.1.0:
     resolution: {integrity: sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g==}
