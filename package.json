@@ -47,7 +47,7 @@
     "@commitlint/prompt-cli": "17.3.0",
     "@types/fs-extra": "^9.0.13",
     "@types/gradient-string": "^1.1.2",
-    "@types/node": "18.11.10",
+    "@types/node": "18.11.12",
     "@types/rimraf": "^3.0.2",
     "@types/validate-npm-package-name": "^4.0.0",
     "@typescript-eslint/eslint-plugin": "5.45.0",
