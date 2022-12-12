@@ -55,7 +55,7 @@
     "codependence": "^0.2.6",
     "eslint": "8.28.0",
     "eslint-config-prettier": "^8.5.0",
-    "prettier": "2.8.0",
+    "prettier": "2.8.1",
     "release-it": "15.5.0",
     "rimraf": "^3.0.2",
     "stdouttojson": "^0.7.0",
