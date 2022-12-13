@@ -33,7 +33,7 @@
   "license": "MIT",
   "dependencies": {
     "commander": "9.4.1",
-    "compare-versions": "^5.0.1",
+    "compare-versions": "^5.0.3",
     "cosmiconfig": "^8.0.0",
     "fast-glob": "3.2.12",
     "fs-extra": "11.1.0",
@@ -65,7 +65,7 @@
     "tsutils": "^3.21.0",
     "typescript": "4.9.3",
     "vite": "3.2.4",
-    "vitest": "^0.25.7"
+    "vitest": "^0.25.8"
   },
   "keywords": [
     "nodejs",
