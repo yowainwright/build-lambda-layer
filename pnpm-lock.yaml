@@ -13,7 +13,7 @@ specifiers:
   '@typescript-eslint/parser': 5.45.0
   codependence: ^0.2.6
   commander: 9.4.1
-  compare-versions: ^5.0.1
+  compare-versions: ^5.0.3
   cosmiconfig: ^8.0.0
   eslint: 8.28.0
   eslint-config-prettier: ^8.5.0
@@ -31,12 +31,12 @@ specifiers:
   typescript: 4.9.3
   validate-npm-package-name: ^5.0.0
   vite: 3.2.4
-  vitest: ^0.25.7
+  vitest: ^0.25.8
   zip-a-folder: ^1.1.5
 
 dependencies:
   commander: 9.4.1
-  compare-versions: 5.0.1
+  compare-versions: 5.0.3
   cosmiconfig: 8.0.0
   fast-glob: 3.2.12
   fs-extra: 11.1.0
@@ -68,7 +68,7 @@ devDependencies:
   tsutils: 3.21.0_typescript@4.9.3
   typescript: 4.9.3
   vite: 3.2.4_@types+node@18.11.10
-  vitest: 0.25.7
+  vitest: 0.25.8
 
 packages:
 
@@ -1010,7 +1010,7 @@ packages:
     engines: {node: '>=14.16'}
     dependencies:
       ansi-align: 3.0.1
-      camelcase: 7.0.0
+      camelcase: 7.0.1
       chalk: 5.0.1
       cli-boxes: 3.0.0
       string-width: 5.1.2
@@ -1124,8 +1124,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /camelcase/7.0.0:
-    resolution: {integrity: sha512-JToIvOmz6nhGsUhAYScbo2d6Py5wojjNfoxoc2mEVLUdJ70gJK2gnd+ABY1Tc3sVMyK7QDPtN0T/XdlCQWITyQ==}
+  /camelcase/7.0.1:
+    resolution: {integrity: sha512-xlx1yCK2Oc1APsPXDL2LdlNP6+uu8OCDdhOBSVT279M/S+y75O30C2VuD8T2ogdePBBl7PfPF4504tnLgX3zfw==}
     engines: {node: '>=14.16'}
     dev: true
 
@@ -1288,8 +1288,8 @@ packages:
       dot-prop: 5.3.0
     dev: true
 
-  /compare-versions/5.0.1:
-    resolution: {integrity: sha512-v8Au3l0b+Nwkp4G142JcgJFh1/TUhdxut7wzD1Nq1dyp5oa3tXaqb03EXOAB6jS4gMlalkjAUPZBMiAfKUixHQ==}
+  /compare-versions/5.0.3:
+    resolution: {integrity: sha512-4UZlZP8Z99MGEY+Ovg/uJxJuvoXuN4M6B3hKaiackiHrgzQFEe3diJi1mf1PNHbFujM7FvLrK2bpgIaImbtZ1A==}
     dev: false
 
   /compress-commons/4.1.1:
@@ -4762,8 +4762,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.25.7:
-    resolution: {integrity: sha512-lJ+Ue+v8kHl2JzjaKHJ9u5Yo/loU7zrWK2/Whn8OKQjtq5G7nkeWfXuq3elZaC8xKdkdIuWiiIicaNBG1F5yzg==}
+  /vitest/0.25.8:
+    resolution: {integrity: sha512-X75TApG2wZTJn299E/TIYevr4E9/nBo1sUtZzn0Ci5oK8qnpZAZyhwg0qCeMSakGIWtc6oRwcQFyFfW14aOFWg==}
     engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
