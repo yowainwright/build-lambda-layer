@@ -7,13 +7,19 @@
 
 ### Builds Awesome Node Lambda Layers with Control! 🕹
 
-_Build Lambda Layer_ is a utility CLI for building Lambda Layers with control for AWS Node Lambda projects.
+_Build Lambda Layer_ is a utility CLI for building AWS Lambda Layers with control for AWS Node Lambda projects.
 
 ---
 
 ## Why is this written?
 
-_Build Lambda Layer_ takes complexity out of building lambda layers so lambda layers.
+### _Build Lambda Layer takes complexity out of building lambda layers!_
+
+---
+
+### + Monorepo support<br>+ The ability to ignore and add dependencies at run time<br>+ Easy json configuration!
+
+---
 
 By running:
 
@@ -29,6 +35,8 @@ _Build Lambda Layer_ will:
 ---
 
 #### Additionally, _Build Lambda Layer_ works with monorepos!
+
+A key additional feature that Build Lambda Layer provides is that it works with monorepos!
 
 By running:
 
