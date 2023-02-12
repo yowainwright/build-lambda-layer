@@ -13,13 +13,17 @@ _Build Lambda Layer_ is a utility CLI for building AWS Lambda Layers with contro
 
 ## Why is this written?
 
-### _Build Lambda Layer takes complexity out of building lambda layers!_
+_Build Lambda Layer takes complexity out of building lambda layers!_
 
 ---
 
-### + Monorepo support<br>+ The ability to ignore and add dependencies at run time<br>+ Easy json configuration!
+\+ Monorepo support<br>
+\+ The ability to ignore and add dependencies at run time<br>
+\+ Easy json configuration!
 
 ---
+
+## How does it does it work?
 
 By running:
 
