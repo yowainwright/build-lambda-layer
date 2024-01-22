@@ -1,13 +1,14 @@
-import { promisify } from "util";
-import { exec } from 'child_process'
-import { sync as glob } from "fast-glob";
-import { copyFile, existsSync, readFileSync, mkdirSync, readdirSync } from "fs-extra";
+import { execFile } from 'child_process'
+import * as fg from "fast-glob";
+import * as fsEx from "fs-extra";
 import { validate } from "compare-versions";
 import validatePkgName from "validate-npm-package-name";
 import gradient from 'gradient-string';
 import { zip } from 'zip-a-folder';
 import { sync as rimraf } from 'rimraf';
 import { CheckForUnsafeStrings, Dependencies, DeployLambda, DepsToInstall, BuildLambda, InstallDeps, LambdaLayerPackageJson } from "./interfaces";
+const { copyFile, existsSync, readFileSync, mkdirSync, readdirSync } = fsEx;
+const glob = fg.sync;
 
 /**
  * execPromise
@@ -15,10 +16,24 @@ import { CheckForUnsafeStrings, Dependencies, DeployLambda, DepsToInstall, Build
  * @param {cmd} string
  * @returns {object}
  */
-export const execPromise = promisify(exec);
+export const execFilePromise = (file: string, args: string[]): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    execFile(file, args, (error, stdout, stderr) => {
+      if (error) {
+        reject(`error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        reject(`stderr: ${stderr}`);
+        return;
+      }
+      resolve(stdout);
+    });
+  });
+}
 
-export function logger(fnName: string, msg: any) {
-  console.log(`🕹 ${gradient.vice('lambda-layer:')}${fnName}:debug:`, msg);
+export function logger(fnName: string, msg: unknown) {
+  console.info(`🕹 ${gradient.vice('lambda-layer:')}${fnName}:debug:`, msg);
 }
 
 export function resolveJSON(
@@ -90,7 +105,7 @@ export async function installDeps({
   dir,
   debug = false,
   isTesting = false,
-  exec = execPromise,
+  exec = execFilePromise,
   output = '',
   runner = 'npm',
   rootDir = './',
@@ -100,7 +115,6 @@ export async function installDeps({
   const depsString = deps.map(({ name, version }) => `${name}@${version}`).join(' ');
   // clean up and setup the install
   const outDir = `${rootDir}${output}${dir}`;
-  console.log(outDir);
   if (existsSync(outDir)) rimraf(outDir);
   const modulePath = `${outDir}/nodejs`;
   mkdirSync(modulePath, { recursive: true });
@@ -115,7 +129,7 @@ export async function installDeps({
   if (isTesting === true || deps.length < 1 || !isExec) return;
   if (debug) logger('installDeps', 'Installing deps!');
   try {
-    await exec(`${runner} install ${dest} ${depsString} -S`);
+    await exec(`${runner}`, ["install", dest, depsString, "-S"]);
     return deps;
   } catch (err) {
     if (debug) logger('installDeps', err);
@@ -130,23 +144,35 @@ export async function deployLambda({
   runtimes = ['nodejs14.x'],
   architectures = ['x86_64'],
   output = '',
-  rootDir = './'
-}: DeployLambda) {
-  const runtimesString = runtimes.join(' ');
-  const architecturesString = architectures.join(' ');
+  rootDir = './',
+  exec = execFilePromise,
+}: DeployLambda): Promise<void> {
+  if (!bucket) {
+    throw new Error('No bucket provided');
+  }
+
+  const layerName = `${dir}`;
+  const s3Path = `${rootDir}${output}${dir}.zip`;
+
+  const args = [
+    'lambda', 'publish-layer-version',
+    '--layer-name', layerName,
+    '--content', `S3Bucket=${bucket},S3Key=${s3Path}`,
+    '--compatible-runtimes', runtimes.join(' '),
+    '--compatible-architectures', architectures.join(' ')
+  ];
+
   try {
-    if (debug) logger('deployLambda', { architectures, bucket, dir, output, runtimes, msg: 'Build Lambda Layers assumes you\'re authenticated to AWS! 👌' });
-    if (!bucket) throw new Error('No bucket provided');
-    await exec(`
-        aws lambda publish-layer-version
-        --layer-name ${dir}
-        --content S3Bucket=${bucket},S3Key=${rootDir}${output}${dir}.zip
-        --compatible-runtimes ${runtimesString}
-        --compatible-architectures ${architecturesString}
-      `);
-  } catch (err) {
-    if (debug) logger('deployLambda', err);
-    return;
+    if (debug) {
+      console.log(`Deploying Lambda Layer with: aws ${args.join(' ')}`);
+    }
+    const result = await exec('aws', args);
+    if (debug) {
+      console.log(result);
+    }
+  } catch (error) {
+    console.error(`Failed to deploy Lambda Layer: ${error}`);
+    throw error; // Rethrow the error for further handling if necessary
   }
 }
 
