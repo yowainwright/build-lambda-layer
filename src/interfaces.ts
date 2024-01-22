@@ -88,4 +88,5 @@ export interface DeployLambda {
   architectures?: Array<string>;
   output?: string;
   rootDir?: string;
+  exec?: any;
 }
