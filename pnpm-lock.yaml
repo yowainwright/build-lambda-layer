@@ -27,24 +27,24 @@ importers:
         specifier: 2.0.2
         version: 2.0.2
       validate-npm-package-name:
-        specifier: ^5.0.0
-        version: 5.0.0
+        specifier: ^5.0.1
+        version: 5.0.1
       zip-a-folder:
         specifier: 3.1.6
         version: 3.1.6
     devDependencies:
       '@commitlint/cli':
         specifier: 19.3.0
-        version: 19.3.0(@types/node@20.12.8)(typescript@5.4.5)
+        version: 19.3.0(@types/node@20.12.11)(typescript@5.4.5)
       '@commitlint/config-conventional':
         specifier: 19.2.2
         version: 19.2.2
       '@commitlint/prompt':
         specifier: ^19.3.0
-        version: 19.3.0(@types/node@20.12.8)(typescript@5.4.5)
+        version: 19.3.0(@types/node@20.12.11)(typescript@5.4.5)
       '@commitlint/prompt-cli':
         specifier: 19.3.0
-        version: 19.3.0(@types/node@20.12.8)(typescript@5.4.5)
+        version: 19.3.0(@types/node@20.12.11)(typescript@5.4.5)
       '@eslint/js':
         specifier: ^9.1.1
         version: 9.1.1
@@ -55,8 +55,8 @@ importers:
         specifier: 1.1.6
         version: 1.1.6
       '@types/node':
-        specifier: 20.12.8
-        version: 20.12.8
+        specifier: 20.12.11
+        version: 20.12.11
       '@types/rimraf':
         specifier: 4.0.5
         version: 4.0.5
@@ -91,8 +91,8 @@ importers:
         specifier: 17.2.1
         version: 17.2.1(typescript@5.4.5)
       rimraf:
-        specifier: 5.0.5
-        version: 5.0.5
+        specifier: 5.0.7
+        version: 5.0.7
       tslib:
         specifier: 2.6.2
         version: 2.6.2
@@ -597,8 +597,8 @@ packages:
   '@types/jsonfile@6.1.4':
     resolution: {integrity: sha512-D5qGUYwjvnNNextdU59/+fI+spnwtTFmyQP0h+PfIOSkNfpU6AOICUOkm4i0OnSk+NyjdPJrxCDro0sJsWlRpQ==}
 
-  '@types/node@20.12.8':
-    resolution: {integrity: sha512-NU0rJLJnshZWdE/097cdCBbyW1h4hEg0xpovcoAQYHl8dnEyp/NAOiE45pvc+Bd1Dt+2r94v2eGFpQJ4R7g+2w==}
+  '@types/node@20.12.11':
+    resolution: {integrity: sha512-vDg9PZ/zi+Nqp6boSOT7plNuthRugEKixDv5sFTIpkE89MmNtEArAShI4mxuX2+UrLEe9pxC1vm2cjm9YlWbJw==}
 
   '@types/rimraf@4.0.5':
     resolution: {integrity: sha512-DTCZoIQotB2SUJnYgrEx43cQIUYOlNZz0AZPbKU4PSLYTUdML5Gox0++z4F9kQocxStrCmRNhi4x5x/UlwtKUA==}
@@ -872,9 +872,6 @@ packages:
 
   buffer@5.7.1:
     resolution: {integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==}
-
-  builtins@5.0.1:
-    resolution: {integrity: sha512-qwVpFEHNfhYJIzNRBvd2C1kyo6jz3ZSMPyyuR47OPdiKWlbYnZNyDWuyR175qDnAJLiCo5fBBqPb3RiXgWlkOQ==}
 
   bundle-name@4.1.0:
     resolution: {integrity: sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q==}
@@ -1974,10 +1971,6 @@ packages:
     resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
     engines: {node: '>=10'}
 
-  minimatch@9.0.3:
-    resolution: {integrity: sha512-RHiac9mvaRw0x3AYRgDC1CxAP7HTcNrrECeA8YYJeWnpo+2Q5CegtZjaotWTWxDG3UeGA1coE05iH1mPjT/2mg==}
-    engines: {node: '>=16 || 14 >=14.17'}
-
   minimatch@9.0.4:
     resolution: {integrity: sha512-KqWh+VchfxcMNRAJjj2tnsSJdNbHsVgnkBhTNrW7AjVo6OvLtxw8zfT9oLw1JSohlFzJ8jCoTgaoXvJ+kHt6fw==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -2317,9 +2310,9 @@ packages:
     resolution: {integrity: sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==}
     engines: {iojs: '>=1.0.0', node: '>=0.10.0'}
 
-  rimraf@5.0.5:
-    resolution: {integrity: sha512-CqDakW+hMe/Bz202FPEymy68P+G50RfMQK+Qo5YUqc9SPipvbGjCGKd0RSKEelbsfQuw3g5NZDSrlZZAJurH1A==}
-    engines: {node: '>=14'}
+  rimraf@5.0.7:
+    resolution: {integrity: sha512-nV6YcJo5wbLW77m+8KjH8aB/7/rxQy9SZ0HY5shnwULfS+9nmTtVXAJET5NdZmCzA4fPI/Hm1wo/Po/4mopOdg==}
+    engines: {node: '>=14.18'}
     hasBin: true
 
   rollup@4.9.6:
@@ -2361,11 +2354,6 @@ packages:
   semver-diff@4.0.0:
     resolution: {integrity: sha512-0Ju4+6A8iOnpL/Thra7dZsSlOHYAHIeMxfhWQRI1/VLcT3WDBZKKtQt/QkBOsiIN9ZpuvHE6cGZ0x4glCMmfiA==}
     engines: {node: '>=12'}
-
-  semver@7.5.4:
-    resolution: {integrity: sha512-1bCSESV6Pv+i21Hvpxp3Dx+pSD8lIPt8uVjRrxAUt/nbswYc+tK6Y2btiULjd4+fnq15PX+nqQDC7Oft7WkwcA==}
-    engines: {node: '>=10'}
-    hasBin: true
 
   semver@7.6.0:
     resolution: {integrity: sha512-EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==}
@@ -2689,8 +2677,8 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  validate-npm-package-name@5.0.0:
-    resolution: {integrity: sha512-YuKoXDAhBYxY7SfOKxHBDoSyENFeW5VvIIQp2TGQuit8gpK6MnWaQelBKxso72DoxTZfZdcP3W90LqpSkgPzLQ==}
+  validate-npm-package-name@5.0.1:
+    resolution: {integrity: sha512-OljLrQ9SQdOUqTaQxqL5dEfZWrXExyyWsozYlAWFawPVNuD83igl7uJD2RTkNMbniIYgt8l81eCJGIdQF7avLQ==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
 
   wcwidth@1.0.1:
@@ -2802,11 +2790,11 @@ snapshots:
       chalk: 2.4.2
       js-tokens: 4.0.0
 
-  '@commitlint/cli@19.3.0(@types/node@20.12.8)(typescript@5.4.5)':
+  '@commitlint/cli@19.3.0(@types/node@20.12.11)(typescript@5.4.5)':
     dependencies:
       '@commitlint/format': 19.3.0
       '@commitlint/lint': 19.2.2
-      '@commitlint/load': 19.2.0(@types/node@20.12.8)(typescript@5.4.5)
+      '@commitlint/load': 19.2.0(@types/node@20.12.11)(typescript@5.4.5)
       '@commitlint/read': 19.2.1
       '@commitlint/types': 19.0.3
       execa: 8.0.1
@@ -2853,7 +2841,7 @@ snapshots:
       '@commitlint/rules': 19.0.3
       '@commitlint/types': 19.0.3
 
-  '@commitlint/load@19.2.0(@types/node@20.12.8)(typescript@5.4.5)':
+  '@commitlint/load@19.2.0(@types/node@20.12.11)(typescript@5.4.5)':
     dependencies:
       '@commitlint/config-validator': 19.0.3
       '@commitlint/execute-rule': 19.0.0
@@ -2861,7 +2849,7 @@ snapshots:
       '@commitlint/types': 19.0.3
       chalk: 5.3.0
       cosmiconfig: 9.0.0(typescript@5.4.5)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.12.8)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5)
+      cosmiconfig-typescript-loader: 5.0.0(@types/node@20.12.11)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5)
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       lodash.uniq: 4.5.0
@@ -2877,19 +2865,19 @@ snapshots:
       conventional-changelog-angular: 7.0.0
       conventional-commits-parser: 5.0.0
 
-  '@commitlint/prompt-cli@19.3.0(@types/node@20.12.8)(typescript@5.4.5)':
+  '@commitlint/prompt-cli@19.3.0(@types/node@20.12.11)(typescript@5.4.5)':
     dependencies:
-      '@commitlint/prompt': 19.3.0(@types/node@20.12.8)(typescript@5.4.5)
+      '@commitlint/prompt': 19.3.0(@types/node@20.12.11)(typescript@5.4.5)
       execa: 8.0.1
       inquirer: 9.2.19
     transitivePeerDependencies:
       - '@types/node'
       - typescript
 
-  '@commitlint/prompt@19.3.0(@types/node@20.12.8)(typescript@5.4.5)':
+  '@commitlint/prompt@19.3.0(@types/node@20.12.11)(typescript@5.4.5)':
     dependencies:
       '@commitlint/ensure': 19.0.3
-      '@commitlint/load': 19.2.0(@types/node@20.12.8)(typescript@5.4.5)
+      '@commitlint/load': 19.2.0(@types/node@20.12.11)(typescript@5.4.5)
       '@commitlint/types': 19.0.3
       chalk: 5.3.0
       inquirer: 9.2.19
@@ -3216,14 +3204,14 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.0':
     dependencies:
-      '@types/node': 20.12.8
+      '@types/node': 20.12.11
 
   '@types/estree@1.0.5': {}
 
   '@types/fs-extra@11.0.4':
     dependencies:
       '@types/jsonfile': 6.1.4
-      '@types/node': 20.12.8
+      '@types/node': 20.12.11
 
   '@types/gradient-string@1.1.6':
     dependencies:
@@ -3235,15 +3223,15 @@ snapshots:
 
   '@types/jsonfile@6.1.4':
     dependencies:
-      '@types/node': 20.12.8
+      '@types/node': 20.12.11
 
-  '@types/node@20.12.8':
+  '@types/node@20.12.11':
     dependencies:
       undici-types: 5.26.5
 
   '@types/rimraf@4.0.5':
     dependencies:
-      rimraf: 5.0.5
+      rimraf: 5.0.7
 
   '@types/semver@7.5.8': {}
 
@@ -3592,10 +3580,6 @@ snapshots:
       base64-js: 1.5.1
       ieee754: 1.2.1
 
-  builtins@5.0.1:
-    dependencies:
-      semver: 7.5.4
-
   bundle-name@4.1.0:
     dependencies:
       run-applescript: 7.0.0
@@ -3690,7 +3674,7 @@ snapshots:
       fast-glob: 3.3.2
       gradient-string: 2.0.2
       ora: 8.0.1
-      validate-npm-package-name: 5.0.0
+      validate-npm-package-name: 5.0.1
     transitivePeerDependencies:
       - typescript
 
@@ -3758,9 +3742,9 @@ snapshots:
 
   core-util-is@1.0.3: {}
 
-  cosmiconfig-typescript-loader@5.0.0(@types/node@20.12.8)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5):
+  cosmiconfig-typescript-loader@5.0.0(@types/node@20.12.11)(cosmiconfig@9.0.0(typescript@5.4.5))(typescript@5.4.5):
     dependencies:
-      '@types/node': 20.12.8
+      '@types/node': 20.12.11
       cosmiconfig: 9.0.0(typescript@5.4.5)
       jiti: 1.21.0
       typescript: 5.4.5
@@ -4250,7 +4234,7 @@ snapshots:
     dependencies:
       foreground-child: 3.1.1
       jackspeak: 2.3.6
-      minimatch: 9.0.3
+      minimatch: 9.0.4
       minipass: 7.0.4
       path-scurry: 1.10.1
 
@@ -4768,10 +4752,6 @@ snapshots:
     dependencies:
       brace-expansion: 2.0.1
 
-  minimatch@9.0.3:
-    dependencies:
-      brace-expansion: 2.0.1
-
   minimatch@9.0.4:
     dependencies:
       brace-expansion: 2.0.1
@@ -5147,7 +5127,7 @@ snapshots:
 
   reusify@1.0.4: {}
 
-  rimraf@5.0.5:
+  rimraf@5.0.7:
     dependencies:
       glob: 10.3.10
 
@@ -5204,10 +5184,6 @@ snapshots:
   semver-diff@4.0.0:
     dependencies:
       semver: 7.6.0
-
-  semver@7.5.4:
-    dependencies:
-      lru-cache: 6.0.0
 
   semver@7.6.0:
     dependencies:
@@ -5552,9 +5528,7 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  validate-npm-package-name@5.0.0:
-    dependencies:
-      builtins: 5.0.1
+  validate-npm-package-name@5.0.1: {}
 
   wcwidth@1.0.1:
     dependencies:
