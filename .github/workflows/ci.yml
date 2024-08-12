@@ -21,7 +21,7 @@ jobs:
         with:
           node-version: 20
 
-      - uses: pnpm/action-setup@v2.2.4
+      - uses: pnpm/action-setup@v4
         name: Install pnpm
         id: pnpm-install
         with:
@@ -42,6 +42,5 @@ jobs:
       - run: pnpm install --no-frozen-lockfile
       - run: pnpm build
       - run: pnpm lint
-        # - run: pnpm test
         env:
           CI: true
