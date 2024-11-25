@@ -42,18 +42,18 @@
     "zip-a-folder": "3.1.8"
   },
   "devDependencies": {
-    "@commitlint/cli": "19.5.0",
-    "@commitlint/config-conventional": "19.5.0",
+    "@commitlint/cli": "19.6.0",
+    "@commitlint/config-conventional": "19.6.0",
     "@commitlint/prompt": "^19.3.0",
-    "@commitlint/prompt-cli": "19.5.0",
+    "@commitlint/prompt-cli": "19.6.0",
     "@eslint/js": "^9.1.1",
     "@types/fs-extra": "11.0.4",
     "@types/gradient-string": "1.1.6",
-    "@types/node": "22.9.0",
+    "@types/node": "22.9.3",
     "@types/rimraf": "4.0.5",
     "@types/validate-npm-package-name": "4.0.2",
-    "@typescript-eslint/eslint-plugin": "8.14.0",
-    "@typescript-eslint/parser": "8.14.0",
+    "@typescript-eslint/eslint-plugin": "8.15.0",
+    "@typescript-eslint/parser": "8.15.0",
     "codependence": "0.3.1",
     "eslint": "9.15.0",
     "eslint-config-prettier": "9.1.0",
@@ -66,7 +66,7 @@
     "tsup": "8.3.5",
     "tsutils": "^3.21.0",
     "tsx": "^4.7.0",
-    "typescript": "5.6.3",
+    "typescript": "5.7.2",
     "typescript-eslint": "^7.7.1"
   },
   "keywords": [
