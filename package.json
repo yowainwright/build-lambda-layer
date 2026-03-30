@@ -52,8 +52,8 @@
     "@types/node": "25.5.0",
     "@types/rimraf": "4.0.5",
     "@types/validate-npm-package-name": "4.0.2",
-    "@typescript-eslint/eslint-plugin": "8.57.1",
-    "@typescript-eslint/parser": "8.57.1",
+    "@typescript-eslint/eslint-plugin": "8.57.2",
+    "@typescript-eslint/parser": "8.57.2",
     "codependence": "0.3.1",
     "eslint": "10.1.0",
     "eslint-config-prettier": "10.1.8",
@@ -66,7 +66,7 @@
     "tsup": "8.5.1",
     "tsutils": "^3.21.0",
     "tsx": "^4.7.0",
-    "typescript": "5.9.3",
+    "typescript": "6.0.2",
     "typescript-eslint": "^7.7.1"
   },
   "keywords": [
